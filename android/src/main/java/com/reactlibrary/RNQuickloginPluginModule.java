@@ -23,6 +23,18 @@ public class RNQuickloginPluginModule extends ReactContextBaseJavaModule {
         return "QuickLoginPlugin";
     }
 
+      // Required for rn built in EventEmitter Calls.
+    @ReactMethod
+    public void addListener(String eventName) {
+
+    }
+
+    @ReactMethod
+    public void removeListeners(Integer count) {
+
+    }
+    
+    
     @ReactMethod
     public void initQuickLogin(String businessId) {
         quickLoginHelper.init(businessId);
