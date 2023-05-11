@@ -122,6 +122,7 @@ object UiConfigParser {
     private var privacyToastStr = ""
     private var privacyDialogText = ""
     private var privacyDialogSize = 15.0f
+    private var backPressedAvailable = true
 
     @SuppressLint("StaticFieldLeak")
     private var context: ReactContext? = null
@@ -133,6 +134,7 @@ object UiConfigParser {
     @Suppress("UNCHECKED_CAST")
     private fun parser(uiConfig: Map<String, Any>) {
         Logger.d("uiConfig--->$uiConfig")
+        backPressedAvailable = (uiConfig["backPressedAvailable"] ?: false) as Boolean
         statusBarColor = (uiConfig["statusBarColor"] ?: "") as String
         isStatusBarDarkColor = (uiConfig["isStatusBarDarkColor"] ?: false) as Boolean
         navBackIcon = (uiConfig["navBackIcon"] ?: "") as String
@@ -251,6 +253,7 @@ object UiConfigParser {
     private fun buildUiConfig(context: Context): UnifyUiConfig {
         val builder: UnifyUiConfig.Builder = UnifyUiConfig.Builder()
             .setStatusBarDarkColor(isStatusBarDarkColor)
+            .setBackPressedAvailable(backPressedAvailable)
             .setNavigationIconGravity(navBackIconGravity)
             .setNavigationBackIconWidth(navBackIconWidth)
             .setNavigationBackIconHeight(navBackIconHeight)
