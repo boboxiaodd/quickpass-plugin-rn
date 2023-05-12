@@ -8,6 +8,7 @@ import com.netease.nis.basesdk.Logger
 import com.netease.nis.quicklogin.QuickLogin
 import com.netease.nis.quicklogin.listener.QuickLoginPreMobileListener
 import com.netease.nis.quicklogin.listener.QuickLoginTokenListener
+import org.json.JSONObject
 
 /**
  * Created by hzhuqi on 2020/9/9
@@ -36,8 +37,9 @@ class QuickLoginHelper(context: ReactApplicationContext) {
         }
     }
 
-    fun prefetchNumber(callback: Callback) {
+    fun prefetchNumber(PrefetchTimeout:Int,callback: Callback) {
         val map = WritableNativeMap()
+        quickLogin?.setPrefetchNumberTimeout(PrefetchTimeout);
         quickLogin?.prefetchMobileNumber(object : QuickLoginPreMobileListener() {
             override fun onGetMobileNumberSuccess(YDToken: String?, mobileNumber: String?) {
                 map.putString("token", YDToken)
@@ -67,6 +69,7 @@ class QuickLoginHelper(context: ReactApplicationContext) {
                 map.putString("desc", "取号失败$msg")
                 callback.invoke(false, map)
             }
+
         })
     }
 
