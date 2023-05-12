@@ -23,7 +23,8 @@ public class RNQuickloginPluginModule extends ReactContextBaseJavaModule {
         return "QuickLoginPlugin";
     }
 
-      // Required for rn built in EventEmitter Calls.
+
+    // Required for rn built in EventEmitter Calls.
     @ReactMethod
     public void addListener(String eventName) {
 
@@ -33,8 +34,7 @@ public class RNQuickloginPluginModule extends ReactContextBaseJavaModule {
     public void removeListeners(Integer count) {
 
     }
-    
-    
+
     @ReactMethod
     public void initQuickLogin(String businessId) {
         quickLoginHelper.init(businessId);
@@ -46,8 +46,8 @@ public class RNQuickloginPluginModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void prefetchNumber(Callback callback) {
-        quickLoginHelper.prefetchNumber(callback);
+    public void prefetchNumber(Integer timeout , Callback callback) {
+        quickLoginHelper.prefetchNumber(timeout,callback);
     }
 
     @ReactMethod
