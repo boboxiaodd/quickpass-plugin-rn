@@ -1,6 +1,7 @@
-
+def safeExtGet(prop, fallback) {
+    rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+}
 buildscript {
-    ext.kotlin_version = '1.5.20'
     repositories {
         jcenter()
         google()
@@ -45,6 +46,6 @@ repositories {
 dependencies {
     implementation "com.facebook.react:react-native:+"
     implementation 'io.github.yidun:quicklogin:3.3.0'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${safeExtGet("okHttpVersion", '1.8.10')}"
 }
   
