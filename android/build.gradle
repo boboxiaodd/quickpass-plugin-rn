@@ -44,7 +44,7 @@ repositories {
 
 dependencies {
     implementation "com.facebook.react:react-native:+"
-    implementation 'io.github.yidun:quicklogin:3.3.0'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${safeExtGet("okHttpVersion", '1.8.10')}"
+    implementation 'io.github.yidun:quicklogin:3.3.8'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${safeExtGet("kotlinVersion", '1.8.10')}"
 }
   
