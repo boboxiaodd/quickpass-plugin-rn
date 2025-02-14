@@ -8,7 +8,6 @@ import com.netease.nis.basesdk.Logger
 import com.netease.nis.quicklogin.QuickLogin
 import com.netease.nis.quicklogin.listener.QuickLoginPreMobileListener
 import com.netease.nis.quicklogin.listener.QuickLoginTokenListener
-import org.json.JSONObject
 
 /**
  * Created by hzhuqi on 2020/9/9
@@ -24,6 +23,7 @@ class QuickLoginHelper(context: ReactApplicationContext) {
         }
         quickLogin = QuickLogin.getInstance()
         quickLogin?.init(context, businessId)
+        quickLogin?.setDebugMode(true)
     }
 
     fun setUiConfig(uiConfig: Map<String, Any>, callback: Callback) {
@@ -36,18 +36,19 @@ class QuickLoginHelper(context: ReactApplicationContext) {
             }
         }
     }
-
-    fun prefetchNumber(PrefetchTimeout:Int,callback: Callback) {
-        val map = WritableNativeMap()
+    fun setPrefetchNumberTimeout(PrefetchTimeout:Int) {
         quickLogin?.setPrefetchNumberTimeout(PrefetchTimeout);
-        quickLogin?.prefetchMobileNumber(object : QuickLoginPreMobileListener() {
-            override fun onGetMobileNumberSuccess(YDToken: String?, mobileNumber: String?) {
-                map.putString("token", YDToken)
+    }
+    fun prefetchNumber(callback: Callback) {
+        val map = WritableNativeMap()
+        quickLogin?.prefetchMobileNumber(object : QuickLoginPreMobileListener {
+            override fun onGetMobileNumberSuccess(ydToken: String?, mobileNumber: String?) {
+                map.putString("token", ydToken)
                 callback.invoke(true, map)
             }
 
-            override fun onGetMobileNumberError(YDToken: String?, msg: String?) {
-                map.putString("token", YDToken)
+            override fun onGetMobileNumberError(ydToken: String?, msg: String?) {
+                map.putString("token", ydToken)
                 map.putString("desc", msg)
                 callback.invoke(false, map)
             }
@@ -56,20 +57,19 @@ class QuickLoginHelper(context: ReactApplicationContext) {
 
     fun onePass(callback: Callback) {
         val map = WritableNativeMap()
-        quickLogin?.onePass(object : QuickLoginTokenListener() {
-            override fun onGetTokenSuccess(YDToken: String?, accessCode: String?) {
-                map.putString("token", YDToken)
+        quickLogin?.onePass(object : QuickLoginTokenListener {
+            override fun onGetTokenSuccess(ydToken: String?, accessCode: String?) {
+                map.putString("token", ydToken)
                 map.putString("accessToken", accessCode)
                 map.putString("desc", "取号成功")
                 callback.invoke(true, map)
             }
 
-            override fun onGetTokenError(YDToken: String?, msg: String?) {
-                map.putString("token", YDToken)
+            override fun onGetTokenError(ydToken: String?, code: Int, msg: String?) {
+                map.putString("token", ydToken)
                 map.putString("desc", "取号失败$msg")
                 callback.invoke(false, map)
             }
-
         })
     }
 
@@ -93,16 +93,16 @@ class QuickLoginHelper(context: ReactApplicationContext) {
             return
         }
         val map = WritableNativeMap()
-        quickLogin?.getToken(phoneNumber, object : QuickLoginTokenListener() {
-            override fun onGetTokenSuccess(YDToken: String?, accessCode: String?) {
-                map.putString("token", YDToken)
+        quickLogin?.getToken(phoneNumber, object : QuickLoginTokenListener {
+            override fun onGetTokenSuccess(ydToken: String?, accessCode: String?) {
+                map.putString("token", ydToken)
                 map.putString("accessToken", accessCode)
                 map.putString("desc", "本机校验成功")
                 callback.invoke(true, map)
             }
 
-            override fun onGetTokenError(YDToken: String?, msg: String?) {
-                map.putString("token", YDToken)
+            override fun onGetTokenError(ydToken: String?, code: Int, msg: String?) {
+                map.putString("token", ydToken)
                 map.putString("desc", "本机校验失败$msg")
                 callback.invoke(false, map)
             }
