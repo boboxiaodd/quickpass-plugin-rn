@@ -46,6 +46,11 @@ public class RNQuickloginPluginModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void setPrefetchNumberTimeout(Integer timeout) {
+        quickLoginHelper.setPrefetchNumberTimeout(timeout);
+    }
+    
+    @ReactMethod
     public void prefetchNumber(Integer timeout , Callback callback) {
         quickLoginHelper.prefetchNumber(timeout,callback);
     }
