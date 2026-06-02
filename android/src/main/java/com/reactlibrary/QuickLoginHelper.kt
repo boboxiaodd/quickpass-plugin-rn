@@ -37,7 +37,7 @@ class QuickLoginHelper(context: ReactApplicationContext) {
         }
     }
     fun setPrefetchNumberTimeout(PrefetchTimeout:Int) {
-        quickLogin?.setPrefetchNumberTimeout(PrefetchTimeout);
+        quickLogin?.setPrefetchNumberTotalTimeout(PrefetchTimeout);
     }
     fun prefetchNumber(callback: Callback) {
         val map = WritableNativeMap()
